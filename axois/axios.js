@@ -39,7 +39,7 @@ class Axios {
         chain.unshift.apply(chain, requestInterceptorChain);
         chain.push.apply(chain, responseInterceptorChain);
 
-        let promise = Promise.resolve(config);
+        let promise = Promise.resolve(config); // 顺序执行任务 参数逐级传递
         while (chain.length > 0) {
             promise = promise.then(chain.shift(), chain.shift());
         }

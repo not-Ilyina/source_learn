@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">点我发起请求</button>
+    <button id="btn2">点我发起跨域请求</button>
+    <script>
+        function handleResponse(res) {
+            console.log('Jsonp fetch data', res);
+        }
+        document.getElementById('btn').onclick = function() {
+            const script = document.createElement('script');
+            script.src = 'http://localhost:5001/getJsonp?cb=handleResponse';
+            document.body.insertBefore(script, document.body.firstChild);
+        }
+        function ajax(config) {
+            return new Promise((resolve) => {
+                const xhr = new XMLHttpRequest();
+                const {method = 'get', url = '', data = {}} = config || {};
+                xhr.open(method, url, true); // 是否异步
+                xhr.onload = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status >= 200 && xhr.status < 300 || xhr === 304) {
+                            resolve(xhr.responseText);
+                        } else {
+                            return Promise.reject('err');
+                        }
+                    }
+                }
+                xhr.send(data);
+            }, (err) => console.log(err))
+
+        }
+
+        document.getElementById('btn2').onclick = function() {
+            ajax({
+                url: 'http://localhost:5001/getJsonp',
+            }).then(res => console.log(res));
+        }
+    </script>
+</body>
+</html>
