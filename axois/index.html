@@ -5,31 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script type="text/javascript" src="./axios.js"></script>
+    <script type="text/javascript" src="./axios1.js"></script>
 </head>
 <body>
     <button id="btn">点我发起请求</button>
     <script>
         document.getElementById('btn').onclick = function() {
-            const request = creatAxios();
-            request.interceptors.request.use(config => {
-                console.log('拦截到请求！');
+            // const request = creatAxios();
+            // request.interceptors.request.use(config => {
+            //     console.log('拦截到请求！');
+            //     return config;
+            // }, err => {
+            //     return Promise.reject(err);
+            // });
+
+            // request.interceptors.response.use(config => {
+            //     console.log('拦截到响应数据！');
+            //     return config;
+            // }, err => {
+            //     return Promise.reject(err);
+            // });
+
+            // request({
+            //     method: 'get',
+            //     url: 'http://localhost:5001/getTest',
+            // }).then(res => {
+            //     console.log('结果', res);
+            // });
+            const request = createMyAxios();
+
+            request.interceptor.request.use(config => {
+                console.log('拦截到数据', config);
                 return config;
-            }, err => {
-                return Promise.reject(err);
             });
 
-            request.interceptors.response.use(config => {
-                console.log('拦截到响应数据！');
+            
+            request.interceptor.response.use(config => {
+                console.log('拦截到响应数据', config);
                 return config;
-            }, err => {
-                return Promise.reject(err);
-            });
+            })
 
             request({
                 method: 'get',
                 url: 'http://localhost:5001/getTest',
             }).then(res => {
-                console.log('结果', res);
+                console.log('返回结果', res);
             });
         }
     </script>
