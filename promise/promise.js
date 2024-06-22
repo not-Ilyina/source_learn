@@ -6,6 +6,7 @@ const REJECTED = 'REJECTED';
 class Promise {
     constructor(executor) {
         this.status = PENDING;
+        // 结果
         this.value = undefined;
         this.reason = undefined;
 
@@ -16,7 +17,7 @@ class Promise {
             if (this.status === PENDING) {
                 this.status = FULFILLED;
                 this.value = value;
-                this.onFulfilledCallbacks.forEach(fn => fn(value));
+                this.onFulfilledCallbacks.forEach(fn => fn(value)); // 链式调用
             }
         }
 
