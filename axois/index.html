@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script type="text/javascript" src="./axios.js"></script>
+    <!-- <script type="text/javascript" src="./axios.js"></script> -->
     <script type="text/javascript" src="./axios1.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <button id="btn">点我发起请求</button>
@@ -45,12 +46,32 @@
                 return config;
             })
 
+            // request({
+            //     method: 'get',
+            //     url: 'http://localhost:5000/article/list',
+            // }).then(res => {
+            //     console.log('返回结果', res);
+            // });
+            // const service = axios.create({
+            //     withCredentils: true,
+            //     timeout: 60000,
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     }
+            // })
             request({
                 method: 'get',
-                url: 'http://localhost:5001/getTest',
+                url: 'http://localhost:5000/test',
             }).then(res => {
                 console.log('返回结果', res);
-            });
+            })
+
+            // request({
+            //     method: 'put',
+            //     url: 'http://localhost:5000/test',
+            // }).then(res => {
+            //     console.log('返回结果', res);
+            // })
         }
     </script>
 </body>

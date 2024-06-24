@@ -11,9 +11,11 @@ class MyAxios {
                 const { url = '', method = 'get', data = {} } = config || {};
                 const xhr = new XMLHttpRequest();
                 xhr.open(method, url, true); // 开启异步
+                xhr.withCredentials = true; // 允许请求带着凭证
                 xhr.onload = function() {
                     if (xhr.readyState === 4) {
                         if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+                            const p = xhr.getResponseHeader('Set-Cookie');
                             resolve(xhr.responseText);
                         } else {
                             reject('err');
