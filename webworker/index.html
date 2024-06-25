@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">点击一次开启一个耗时计算任务</button>
+    <button id="btn2">正常工作的按钮</button> <span id="cnt"></span>
+    <Br></Br>
+    <div id="res">结果</div>
+    <script>
+        class TaskManager {
+            constructor() {
+                this.worker = new Worker('worker.js');
+                this.callbacks = {};
+                this.taskId = 0;
+                this.isWorkerBusy = false;
+                this.queue = [];
+
+                this.worker.onmessage = event => {
+                    const { taskId, result } = event.data;
+                    console.log("🚀 ~ TaskManager ~ constructor ~ result:", result)
+                    if (this.callbacks[taskId]) {
+                        this.callbacks[taskId]({ result, taskId });
+                        delete this.callbacks[taskId];
+                    }
+                    this.isWorkerBusy = false;
+                }
+            }a
+
+            parse(rawData) {
+                return new Promise((resolve, reject) => { // 相当于一个 callback
+                    try {
+                        const taskId = this.taskId++;
+                        this.callbacks[taskId] = resolve;
+                        this.queue.push({ taskId, rawData });
+                        console.log('任务 ' + taskId + ' 进入执行队列', rawData);
+                        if (!this.isWorkerBusy && this.queue.length > 0) {
+                            const { taskId, rawData } = this.queue.shift();
+                            this.isWorkerBusy = true;
+                            this.worker.postMessage({ taskId, rawData });
+                        }
+                    } catch (e) {
+                        reject(e);
+                    }
+                })
+            }
+        }
+
+        const taskManager = new TaskManager();
+
+        document.getElementById('btn').onclick = function() {
+            const r = Math.floor(Math.random() * 50);
+            const arr = new Array(r).fill(0).map(i => r);
+            taskManager.parse(arr).then(({ taskId, result }) => {
+                const str = '第 ' + taskId + ' 的计算结果' + result;
+                const li = document.createElement('li');
+                li.innerText = str;
+                document.getElementById('res').appendChild(li);
+            });
+        }
+        document.getElementById('btn2').onclick = function() {
+            cnt++;
+            document.getElementById('cnt').innerText = cnt;
+        }
+    </script>
+</body>
+</html>
