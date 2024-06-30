@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: node.Dockerfile
     ports:
-      - 3000:3000
+      - 3000:3000 ## node 是 3000
   nginx-app:
     build:
       context: .

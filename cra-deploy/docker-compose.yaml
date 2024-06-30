@@ -1,0 +1,8 @@
+version: '3'
+services:
+  cra-deploy:
+    build:
+      context: .
+      dockerfile: cra-deploy.Dockerfile
+    ports:
+      - 4000:80 ## nginx 是 80 端口
