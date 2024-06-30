@@ -10,6 +10,10 @@
 </head>
 <body>
     <button id="btn">点我发起请求</button>
+    <form action="http://localhost:5000/test1" method="post">
+        <input type="text" name="name">
+        <button type="submit">Submit</button>
+    </form>
     <script>
         document.getElementById('btn').onclick = function() {
             // const request = creatAxios();
@@ -59,19 +63,19 @@
             //         "Content-Type": "application/json",
             //     }
             // })
-            request({
-                method: 'get',
-                url: 'http://localhost:5000/test',
-            }).then(res => {
-                console.log('返回结果', res);
-            })
-
             // request({
-            //     method: 'put',
+            //     method: 'get',
             //     url: 'http://localhost:5000/test',
             // }).then(res => {
             //     console.log('返回结果', res);
             // })
+
+            request({
+                method: 'put',
+                url: 'http://localhost:5000/test',
+            }).then(res => {
+                console.log('返回结果', res);
+            })
         }
     </script>
 </body>
