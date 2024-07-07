@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="./promise1.js"></script>
+    <script src="./promise2.js"></script>
 </head>
 <body>
     <script>
@@ -57,21 +57,39 @@
         //     console.log(err);
         // });
 
-        function double(value, callback) { // 回调函数
-            setTimeout(() => callback(value * 2), 1000);
-        }
+        // function double(value, callback) { // 回调函数
+        //     setTimeout(() => callback(value * 2), 1000);
+        // }
 
-        double(3, (x) => console.log(x))
+        // double(3, (x) => console.log(x))
 
-        setTimeout(console.log, 1000, 111, 'rrr');
+        // setTimeout(console.log, 1000, 111, 'rrr');
 
-        async function foo() {
-            console.log(1);
-            return 3;
-        }
+        // async function foo() {
+        //     console.log(1);
+        //     return 3;
+        // }
 
-        const s = foo();
-        console.log("🚀 ~ s:", s)
+        // const s = foo();
+        // console.log("🚀 ~ s:", s)
+
+        const p = new MyPromise((resolve, reject) => {
+            // setTimeout(() => {
+            //     // resolve(555);
+            //     reject(66)
+            // }, 1000);
+            resolve(1000);
+        }).then((value) => {
+            console.log(value);
+        }, (reason) => {
+            console.log(reason);
+        }).then((value) => {
+            console.log(value);
+        }, (reason) => {
+            console.log(reason);
+        });
+
+        // console.log(p);
     </script>
 </body>
 </html>

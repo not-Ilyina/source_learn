@@ -101,7 +101,7 @@ class MyInterceptorManager {
 function createMyAxios() {
     const axois = new MyAxios();
     const request = axois.request.bind(axois); // 只有 Function 的原型才有 bind 方法
-    utils.extends(request, axois, MyAxios);
+    utils.extends(request, Axios.prototype, axois);
     utils.extends(request, axois);
     return request;
 }

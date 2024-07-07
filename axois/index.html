@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <!-- <script type="text/javascript" src="./axios.js"></script> -->
-    <script type="text/javascript" src="./axios1.js"></script>
+    <!-- <script type="text/javascript" src="./axios1.js"></script> -->
+    <script type="text/javascript" src="./axios2.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
@@ -63,6 +64,7 @@
             //         "Content-Type": "application/json",
             //     }
             // })
+
             // request({
             //     method: 'get',
             //     url: 'http://localhost:5000/test',
@@ -70,12 +72,16 @@
             //     console.log('返回结果', res);
             // })
 
-            request({
-                method: 'put',
-                url: 'http://localhost:5000/test',
-            }).then(res => {
+            request.get('http://localhost:5000/test').then(res => {
                 console.log('返回结果', res);
             })
+
+            // request({
+            //     method: 'put',
+            //     url: 'http://localhost:5000/test',
+            // }).then(res => {
+            //     console.log('返回结果', res);
+            // })
         }
     </script>
 </body>
