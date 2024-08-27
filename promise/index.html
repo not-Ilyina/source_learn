@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="./promise2.js"></script>
+    <script src="./promise.js"></script>
 </head>
 <body>
     <script>
@@ -22,32 +22,35 @@
         //         });
         //     }
         // })();
+
         // const p = new Promise((resolve) => {
         //     console.log(1111);
         //     resolve(333);
         // }).then((value) => {
         //     console.log("🚀 ~ p ~ value:", value)
         //     console.log(222);
-        // })
-
-        // Promise.resolve().then(() => {
-        //     console.log(0);
-        //     return Promise.resolve(4);
-        // }).then(res => {
-        //     console.log(res);
+        // }).then((val) => {
+        //     console.log(val);
         // });
 
-        // Promise.resolve().then(() => {
-        //     console.log(1);
-        // }).then(() => {
-        //     console.log(2);
-        // }).then(() => {
-        //     console.log(3);
-        // }).then(() => {
-        //     console.log(5);
-        // }).then(() => {
-        //     console.log(6);
-        // });
+        Promise.resolve().then(() => {
+            console.log(0);
+            return Promise.resolve(4);
+        }).then(res => {
+            console.log(res);
+        });
+
+        Promise.resolve().then(() => {
+            console.log(1);
+        }).then(() => {
+            console.log(2);
+        }).then(() => {
+            console.log(3);
+        }).then(() => {
+            console.log(5);
+        }).then(() => {
+            console.log(6);
+        });
 
         // const p = new MyPromise((resolve, reject) => {
         //     console.log('111');
@@ -73,21 +76,21 @@
         // const s = foo();
         // console.log("🚀 ~ s:", s)
 
-        const p = new MyPromise((resolve, reject) => {
-            // setTimeout(() => {
-            //     // resolve(555);
-            //     reject(66)
-            // }, 1000);
-            resolve(1000);
-        }).then((value) => {
-            console.log(value);
-        }, (reason) => {
-            console.log(reason);
-        }).then((value) => {
-            console.log(value);
-        }, (reason) => {
-            console.log(reason);
-        });
+        // const p = new Promise((resolve, reject) => {
+        //     // setTimeout(() => {
+        //     //     // resolve(555);
+        //     //     reject(66)
+        //     // }, 1000);
+        //     resolve(1000);
+        // }).then((value) => {
+        //     console.log(value);
+        // }, (reason) => {
+        //     console.log(reason);
+        // }).then((value) => {
+        //     console.log(value);
+        // }, (reason) => {
+        //     console.log(reason);
+        // });
 
         // console.log(p);
     </script>
