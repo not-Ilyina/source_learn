@@ -1,5 +1,13 @@
-import React from './react.js';
+// import ReactDOM from "react-dom";
+// ReactDOM.render("hello", document.getElementById("root"));
+import React from "react";
 
-// ReactDOM.render('hello', document.getElementById('root'));
+const jsx = (
+  <div>
+    hello <span>big react</span>
+  </div>
+);
 
-React.render('hello', document.getElementById('root'));
+console.log(React);
+
+console.log(jsx);
