@@ -1,5 +1,5 @@
 // import _ from "lodash";
-import "./main.css";
+// import "./main.css";
 
 // import $ from "jquery";
 
@@ -15,3 +15,8 @@ import "./main.css";
 
 // console.log("hello", res);
 // console.log(name);
+
+import { age1 } from "./age1.js";
+import { age2 } from "./age2.js";
+import { age3 } from "./age3.js";
+console.log(age1, age2, age3);
