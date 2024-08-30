@@ -8,6 +8,16 @@
   <body>
     <!-- <script src="https://cdn.bootcdn.net/ajax/libs/single-spa/5.9.3/umd/single-spa.min.js"></script> -->
     <div id="root"></div>
+    <!-- <a href="#/a">应用一</a>
+    <a href="#/b">应用二</a> -->
+    <script>
+      function go(url) {
+        history.pushState({}, null, url);
+      }
+    </script>
+
+    <a onclick="go('#/a')">app1</a>
+    <a onclick="go('#/b')">app2</a>
     <script type="module">
       /**
        * 刷新页面，html script 重新开始执行，会重新注册应用
@@ -15,13 +25,24 @@
       import { registerApplication, start } from "./single-spa/single-spa.js";
       // 接入协议 bootstrap、mount、unmount
       let app1 = {
-        bootstrap: async () => console.log("app1 bootstrap2"),
+        bootstrap: async () => console.log("app1 bootstrap"),
         mount: async () => console.log("app1 mount"),
         unmount: async () => console.log("app1 unmount"),
       };
       let app2 = {
-        bootstrap: async () => console.log("app2 bootstrap2"),
-        mount: async () => console.log("app2 mount"),
+        bootstrap: async () => console.log("app2 bootstrap"),
+        // mount: async () => console.log("app2 mount"),
+        mount: [
+          async () => {
+            return new Promise((resolve, reject) => {
+              setTimeout(() => {
+                console.log("app2 mount");
+                resolve(666);
+              }, 1000);
+              console.log("mount2 注册定时器");
+            });
+          },
+        ],
         unmount: async () => console.log("app2 unmount"),
       };
       registerApplication(
@@ -35,6 +56,11 @@
         (l) => l.hash.startsWith("#/b")
       );
       start();
+
+      // 需要应用加载完后再切换路径，，
+      window.addEventListener("hashchange", function () {
+        console.log(window.location.hash, "----");
+      });
     </script>
   </body>
 </html>

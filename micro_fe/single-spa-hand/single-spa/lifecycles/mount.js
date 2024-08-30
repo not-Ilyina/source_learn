@@ -6,7 +6,7 @@ export function toMountPromise(app) {
       return app;
     }
     app.status = MOUNTING;
-    return app.mount(app.customProps).then(() => {
+    return app.mount(app.customProps).then((e) => {
       app.status = MOUNTED;
       return app;
     });

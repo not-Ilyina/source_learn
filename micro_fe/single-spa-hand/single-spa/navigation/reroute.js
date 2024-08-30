@@ -4,16 +4,10 @@ import { toBootstrapPromise } from "../lifecycles/bootstrap.js";
 import { toMountPromise } from "../lifecycles/mount.js";
 import { toUnmountPromise } from "../lifecycles/unmount.js";
 import { started } from "../start.js";
-
-export function reroute() {
+import "./navagation-event.js";
+import { callCaptureEventListeners } from "./navagation-event.js";
+export function reroute(event) {
   const { appsToLoad, appsToMount, appsToUnmount } = getAppChanges();
-
-  // 加载完毕要挂载
-  //   const loadMountPromises = Promise.all(
-  //     appsToLoad.map((app) =>
-  //       toLoadPromise().then((app) => tryToBootstrapAddMount(app))
-  //     )
-  //   );
   if (started) {
     // 用户调用了 start 要处理挂载或者卸载
     return performAppChange();
@@ -23,24 +17,23 @@ export function reroute() {
   return loadApp();
 
   function loadApp() {
-    return Promise.all(
-      appsToLoad.map((app) => {
-        toLoadPromise(app);
-      })
-    );
+    return Promise.all(appsToLoad.map(toLoadPromise)).then(callEventListener); // 加载完;
   }
 
   function performAppChange() {
     // 卸载不需要应用
-    const unmountPromises = Promise.all(
-      appsToUnmount.map((app) => toUnmountPromise(app))
-    );
+    const unmountPromises = Promise.all(appsToUnmount.map(toUnmountPromise));
     // 加载 启动 (保证卸载干净)挂载
-    const mountPromises = appsToLoad.map((app) =>
-      toLoadPromise(app).then((app) => {
-        // 保证先卸载干净
-        tryBootstrapAndMount(app, unmountPromises);
-      })
+    const loadMountPromises = Promise.all(
+      appsToLoad.map((app) =>
+        toLoadPromise(app).then((app) => {
+          return app && tryBootstrapAndMount(app, unmountPromises);
+        })
+      )
+    );
+    // 应用加载过了，下次直接挂载
+    const mountPromises = Promise.all(
+      appsToMount.map((app) => tryBootstrapAndMount(app, unmountPromises))
     );
 
     function tryBootstrapAndMount(app, unmountPromises) {
@@ -50,5 +43,14 @@ export function reroute() {
         );
       }
     }
+
+    Promise.all([loadMountPromises, mountPromises]).then(() => {
+      // 挂载完  再调用
+      callEventListener();
+    });
+  }
+
+  function callEventListener() {
+    callCaptureEventListeners(event);
   }
 }

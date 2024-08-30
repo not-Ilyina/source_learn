@@ -2,7 +2,7 @@ import { MOUNTED, NOT_MOUNTED, UNMOUNTING } from "../application/app.help.js";
 
 export function toUnmountPromise(app) {
   return Promise.resolve().then(() => {
-    if (application.status !== MOUNTED) {
+    if (app.status !== MOUNTED) {
       return app;
     }
     app.status = UNMOUNTING;
