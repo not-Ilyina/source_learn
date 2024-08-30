@@ -28,7 +28,7 @@ export default {
     babel({
       exclude: /node_modules/,
     }),
-    nodeResovle(), // 加载 node——module 模块
+    nodeResovle(), // 加载 node_module 模块
     commonjs(), // 支持 cjs 语法
     typescript(),
     terser(),

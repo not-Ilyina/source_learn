@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/single-spa/5.9.3/umd/single-spa.min.js"></script> -->
+    <div id="root"></div>
+    <script type="module">
+      /**
+       * 刷新页面，html script 重新开始执行，会重新注册应用
+       * **/
+      import { registerApplication, start } from "./single-spa/single-spa.js";
+      // 接入协议 bootstrap、mount、unmount
+      let app1 = {
+        bootstrap: async () => console.log("app1 bootstrap2"),
+        mount: async () => console.log("app1 mount"),
+        unmount: async () => console.log("app1 unmount"),
+      };
+      let app2 = {
+        bootstrap: async () => console.log("app2 bootstrap2"),
+        mount: async () => console.log("app2 mount"),
+        unmount: async () => console.log("app2 unmount"),
+      };
+      registerApplication(
+        "a",
+        async () => app1,
+        (l) => l.hash.startsWith("#/a")
+      );
+      registerApplication(
+        "b",
+        async () => app2,
+        (l) => l.hash.startsWith("#/b")
+      );
+      start();
+    </script>
+  </body>
+</html>
