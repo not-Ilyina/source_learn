@@ -33,6 +33,7 @@ class Bundle {
         defines[name].push(statement._module);
       });
     });
+
     // 遍历冲突变量数组
     Object.keys(conflicts).forEach((name) => {
       const modules = defines[name];

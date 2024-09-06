@@ -38,7 +38,7 @@ class Module {
     return allStatements;
   }
   expandStatement(statement) {
-    statement._included = { value: false };
+    statement._included = { value: true };
     let res = [];
 
     // 找到此语句用到的变量 把这些变量定义语句找出来，放到 res 数组

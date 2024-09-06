@@ -37,13 +37,15 @@ function visit(node, parent, enter, leave) {
   keys.forEach((key) => {
     let val = node[key];
     if (Array.isArray(val)) {
+      // 子节点 body 可能是数组
       val.forEach((v) => {
         if (v.type) {
           visit(v, node, enter, leave);
         }
       });
     } else if (val && val.type) {
-      visit(val, node, enter, leave);
+      // 子节点 body 可能是对象
+      visit(val, node, enter, leave); // 变量名和代码块会被遍历
     }
   });
   if (leave) {

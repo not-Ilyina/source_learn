@@ -1,6 +1,5 @@
 const { name } = require("../../rollup-use/src/msg");
 const Scope = require("./scope");
-const scope = require("./scope");
 
 var a = 1;
 function one() {
